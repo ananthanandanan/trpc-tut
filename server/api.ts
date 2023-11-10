@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "./routers/index";
+import { appRouter } from "./routers";
+import { createContext } from "./context";
 
 const app = express();
 
@@ -11,7 +12,9 @@ app.use(
   })
 );
 
-app.use("/trpc", createExpressMiddleware({ router: appRouter }));
+app.use("/trpc", 
+createExpressMiddleware({ router: appRouter, createContext })
+);
 
 app.listen(3000);
 
